@@ -249,7 +249,7 @@ float MajorMinorAxis::getMajorAxisAngle( Channel32f const &channel, Vec2f const 
 				float dx = centroid.x - iter.getPos().x;
 				float dy = centroid.x - iter.getPos().y;
 				
-				// Sum of squares of the values.
+				// Sum of squares of the distances.
 				DX2 += dx * dx;
 				DY2 += dy * dy;
 
@@ -259,7 +259,7 @@ float MajorMinorAxis::getMajorAxisAngle( Channel32f const &channel, Vec2f const 
 		}
 	}
 
-	// Flip DY2 sign of DXDY is negative.
+	// Flip DY2 sign if DXDY is negative.
 	if ( DXDY < 0 )
 		DY2 *= -1;
 	
