@@ -42,6 +42,7 @@ class MajorMinorAxis : public AppBasic
 	void update();
 	void draw();
 	void prepareSettings( Settings *settings );
+  
   private:
 	// Size of the input images.
 	static const int IMG_WIDTH  = 320;
@@ -54,11 +55,7 @@ class MajorMinorAxis : public AppBasic
 	Vec2f mCentroid;
 	int   mPixelCount;
 	float mMajorAxisAngle;
-	
-	// Remember Draw state.
-	enum DrawState { DRAW_STATE_1, DRAW_STATE_2, DRAW_STATE_3 };
-	DrawState mDrawState;
-	
+		
 	// 3 sets of 2 channels for background subtraction.
 	Channel32f mImg1a;
 	Channel32f mImg1b;
@@ -100,9 +97,6 @@ void MajorMinorAxis::setup()
 	mImg2b = Channel32f( loadImage( loadResource( "img-2b.jpg" ) ) );
 	mImg3a = Channel32f( loadImage( loadResource( "img-3a.jpg" ) ) );
 	mImg3b = Channel32f( loadImage( loadResource( "img-3b.jpg" ) ) );
-	
-	// Initialize draw state.
-	mDrawState = DRAW_STATE_1;
 	
 	// Initialize threshold value.
 	mThreshold = .2;
