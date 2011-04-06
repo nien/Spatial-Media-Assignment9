@@ -146,25 +146,20 @@ void MajorMinorAxis::draw()
 	gl::drawSolidCircle( center, 7.0f );
 
 	// Draw the major axis.
-	Vec2f majorPtA, majorPtB;
-	majorPtA.x = cos( mMajorAxisAngle ) * MAJOR_AXIS_RADIUS;
-	majorPtA.y = sin( mMajorAxisAngle ) * MAJOR_AXIS_RADIUS;
-	majorPtB.x = cos( mMajorAxisAngle + M_PI ) * MAJOR_AXIS_RADIUS;
-	majorPtB.y = sin( mMajorAxisAngle + M_PI ) * MAJOR_AXIS_RADIUS;
-
-	glLineWidth( 2.0f );
+	Vec2f majorAxis;
+	majorAxis.x = cos( mMajorAxisAngle ) * MAJOR_AXIS_RADIUS;
+	majorAxis.y = sin( mMajorAxisAngle ) * MAJOR_AXIS_RADIUS;
 	gl::color( Color( 1.0f, 0.0f, 1.0f ) );
-	gl::drawLine( majorPtA + center, majorPtB + center );
+	glLineWidth( 2.0f );
+	gl::drawLine( majorAxis + center, -majorAxis + center );
 
-	// Draw the minor axis.
-	Vec2f minorPtA, minorPtB;
-	minorPtA.x = cos( mMajorAxisAngle + .5 * M_PI ) * MINOR_AXIS_RADIUS;
-	minorPtA.y = sin( mMajorAxisAngle + .5 * M_PI ) * MINOR_AXIS_RADIUS;
-	minorPtB.x = cos( mMajorAxisAngle + 1.5 * M_PI ) * MINOR_AXIS_RADIUS;
-	minorPtB.y = sin( mMajorAxisAngle + 1.5 * M_PI ) * MINOR_AXIS_RADIUS;
-
+	// Draw the minor axis which the major axis rotated 90 degrees.
+	Vec2f minorAxis;
+	minorAxis.x = cos( mMajorAxisAngle + .5 * M_PI ) * MINOR_AXIS_RADIUS;
+	minorAxis.y = sin( mMajorAxisAngle + .5 * M_PI ) * MINOR_AXIS_RADIUS;
 	gl::color( Color( 0.0f, 1.0f, 0.0f ) );
-	gl::drawLine( minorPtA + center, minorPtB + center );
+	glLineWidth( 2.0f );
+	gl::drawLine( minorAxis + center, -minorAxis + center );
 }
 
 void MajorMinorAxis::keyDown( KeyEvent event ) 
