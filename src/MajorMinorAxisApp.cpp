@@ -130,18 +130,15 @@ void MajorMinorAxis::draw()
 	gl::clear( Color( 0, 0, 0 ), true );
 	gl::color( Color( 1.0f, 1.0f, 1.0f ) );
 
-	// Draw background image.
+	// Draw background and object image.
 	gl::draw( mBackground, Vec2f(0, 0) );
-	
-	// Draw object image.
 	gl::draw( mObject, Vec2f( IMG_WIDTH + IMG_SPACER, 0 ) );
 
-	// Draw background subtraced image.
+	// Draw background subtracted image.
 	Vec2f imagePosition = Vec2f( ( IMG_WIDTH + IMG_SPACER ) * 2, 0 );
 	gl::draw( mResult, imagePosition );
-
 	
-	// Use the center offset by the image position. 
+	// Offset center by the image position. 
 	Vec2f center = mCentroid + imagePosition;
 
 	// Draw the centroid on the subtracted image.
