@@ -56,13 +56,13 @@ class MajorMinorAxis : public AppBasic
 	int   mPixelCount;
 	float mMajorAxisAngle;
 		
-	// 3 sets of 2 channels for background subtraction.
-	Channel32f mImg1a;
-	Channel32f mImg1b;
-	Channel32f mImg2a;
-	Channel32f mImg2b;
-	Channel32f mImg3a;
-	Channel32f mImg3b;
+	// Images for background subtraction.
+	Channel32f mImageBg;
+	Channel32f mImage1;
+	Channel32f mImage2;
+	Channel32f mImage3;
+	Channel32f mImage4;
+	Channel32f mImage5;
 	
 	// Channels for outputing to the screen.
 	Channel32f mBackground, mObject;
@@ -91,19 +91,19 @@ void MajorMinorAxis::prepareSettings( Settings *settings )
 void MajorMinorAxis::setup()
 {
 	// Get image files.
-	mImg1a = Channel32f( loadImage( loadResource( "img-1a.jpg" ) ) );
-	mImg1b = Channel32f( loadImage( loadResource( "img-1b.jpg" ) ) );
-	mImg2a = Channel32f( loadImage( loadResource( "img-2a.jpg" ) ) );
-	mImg2b = Channel32f( loadImage( loadResource( "img-2b.jpg" ) ) );
-	mImg3a = Channel32f( loadImage( loadResource( "img-3a.jpg" ) ) );
-	mImg3b = Channel32f( loadImage( loadResource( "img-3b.jpg" ) ) );
+	mImageBg = Channel32f( loadImage( loadResource( "image-bg.jpg" ) ) );
+	mImage1  = Channel32f( loadImage( loadResource( "image1.jpg" ) ) );
+	mImage2  = Channel32f( loadImage( loadResource( "image2.jpg" ) ) );
+	mImage3  = Channel32f( loadImage( loadResource( "image3.jpg" ) ) );
+	mImage4  = Channel32f( loadImage( loadResource( "image4.jpg" ) ) );
+	mImage5  = Channel32f( loadImage( loadResource( "image5.jpg" ) ) );
 	
 	// Initialize threshold value.
 	mThreshold = .2;
 
 	// Initialize output image.
-	mBackground = mImg1a;
-	mObject     = mImg1b;
+	mBackground = mImageBg;
+	mObject     = mImage1;
 	mResult     = Channel32f( IMG_WIDTH, IMG_HEIGHT );
 }
 
@@ -161,18 +161,23 @@ void MajorMinorAxis::keyDown( KeyEvent event )
 	// Change image based on keyboard input.
     if ( event.getChar() == '1' )
 	{
-		mBackground = mImg1a;
-		mObject = mImg1b;
+		mObject = mImage1;
 	}
     else if ( event.getChar() == '2' )
 	{	
-		mBackground = mImg2a;
-		mObject = mImg2b;
+		mObject = mImage2;
 	}
 	else if ( event.getChar() == '3' )
 	{
-		mBackground = mImg3a;
-		mObject = mImg3b;
+		mObject = mImage3;
+	}
+	else if ( event.getChar() == '4' )
+	{
+		mObject = mImage4;
+	}
+	else if ( event.getChar() == '5' )
+	{
+		mObject = mImage5;
 	}
 	
 	// Change threshold with key press.       
@@ -247,7 +252,7 @@ float MajorMinorAxis::getMajorAxisAngle( Channel32f const &channel, Vec2f const 
 			{
 				// Get pixel distance from centroid.
 				float dx = centroid.x - iter.getPos().x;
-				float dy = centroid.x - iter.getPos().y;
+				float dy = centroid.y - iter.getPos().y;
 				
 				// Sum of squares of the distances.
 				DX2 += dx * dx;
